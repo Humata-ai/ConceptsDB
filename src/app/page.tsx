@@ -1,5 +1,6 @@
 import React from "react";
 import { createEmbeddings } from "@/utils-server/openai/create-embedding";
+import styles from "./page.module.css";
 
 export default async function Home() {
   const [{ embedding: catEmbedding }] = await createEmbeddings(['cat'])

@@ -9,8 +9,6 @@ export async function createEmbeddings(
     throw new Error('OPENAI_API_KEY was not set');
   }
 
-  // Add dimensions param only for text-embedding-3-large and new models
-  // older models does not support that.
   const $promise = fetch('https://api.openai.com/v1/embeddings', {
     method: 'POST',
     headers: {
