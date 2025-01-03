@@ -40,12 +40,11 @@ export default async function Home() {
     "jungle", "key", "lantern", "mirror", "nectar", "owl", "peach", "quasar", "rainbow"
   ];
 
-  const [{ embedding: catEmbedding }, { embedding: dogEmbedding }, { embedding: baseballEmbedding }] = await createEmbeddings(words, { dimensions: 3 })
   const wordsWithEmbeddings = await addCoordinatesToWords(words)
   const points = wordsWithEmbeddings.map(addColor)
 
   return (
-    <div>
+    <div style={styles}>
       <div>
         cat (dimensions {catEmbeddingFull.length})<span style={{ marginLeft: '54px' }}></span>: {JSON.stringify(catEmbeddingFull).slice(0, 200)}...
       </div>
