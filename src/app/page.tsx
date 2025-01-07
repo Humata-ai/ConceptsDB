@@ -43,9 +43,21 @@ export default async function Home() {
 
 
       <br />
+      <div>Dot Product Distance on 3072 dimension embedding vectors</div>
       <EmbeddingDistance wordOne="apple" wordTwo="apple" />
       <EmbeddingDistance wordOne="apple" wordTwo="banana" />
       <EmbeddingDistance wordOne="apple" wordTwo="pineapple" />
+
+      <br />
+      <br />
+      <div>Dot Product Distance After Low Dimensional Projections 3 dimension embedding vectors</div>
+      <EmbeddingDistance wordOne="apple" wordTwo="apple" dimensions={3} />
+      <EmbeddingDistance wordOne="apple" wordTwo="banana" dimensions={3} />
+      <EmbeddingDistance wordOne="apple" wordTwo="pineapple" dimensions={3} />
+
+      <br />
+      <br />
+      <div>The reason they are so close is because we lose a lot of rich information when we drop that many dimensions</div>
 
     </div>
   );
