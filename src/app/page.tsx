@@ -26,12 +26,9 @@ function addColor<T>(word: T) {
 
 export default async function Home() {
   const words = [
-    "cat",
-    "cats",
     "apple",
     "pineapple",
     "banana",
-    "Jesus",
   ];
 
   const wordsWithEmbeddings = await addCoordinatesToWords(words)
@@ -39,19 +36,14 @@ export default async function Home() {
 
   return (
     <div style={styles}>
-      <h3>- [ ] Question: Cat and Apple appear very closely while apple and banana appear very far apart. Why?</h3>
+      <h3>Why are apple and pineapple close, while apple and banana far?</h3>
       <br />
       <br />
       <PlotExample points={points} />
 
-      <EmbeddingDistance wordOne="cat" wordTwo="cat" />
-      <EmbeddingDistance wordOne="cat" wordTwo="cats" />
-      <EmbeddingDistance wordOne="cat" wordTwo="apple" />
-      <EmbeddingDistance wordOne="cat" wordTwo="pineapple" />
-      <EmbeddingDistance wordOne="cat" wordTwo="banana" />
-      <EmbeddingDistance wordOne="cat" wordTwo="Jesus" />
 
       <br />
+      <EmbeddingDistance wordOne="apple" wordTwo="apple" />
       <EmbeddingDistance wordOne="apple" wordTwo="banana" />
       <EmbeddingDistance wordOne="apple" wordTwo="pineapple" />
 
