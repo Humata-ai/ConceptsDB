@@ -29,6 +29,7 @@ export default async function Home() {
     "cat",
     "cats",
     "apple",
+    "pineapple",
     "banana",
     "Jesus",
   ];
@@ -46,11 +47,13 @@ export default async function Home() {
       <EmbeddingDistance wordOne="cat" wordTwo="cat" />
       <EmbeddingDistance wordOne="cat" wordTwo="cats" />
       <EmbeddingDistance wordOne="cat" wordTwo="apple" />
+      <EmbeddingDistance wordOne="cat" wordTwo="pineapple" />
       <EmbeddingDistance wordOne="cat" wordTwo="banana" />
       <EmbeddingDistance wordOne="cat" wordTwo="Jesus" />
 
       <br />
-      <EmbeddingDistance wordOne="banana" wordTwo="apple" />
+      <EmbeddingDistance wordOne="apple" wordTwo="banana" />
+      <EmbeddingDistance wordOne="apple" wordTwo="pineapple" />
 
     </div>
   );
