@@ -14,7 +14,7 @@ Accelerating the discovering of new knowledge...
   - Know view will show the sections of new_paper_A.pdf that is not already in all-my-market-research.know
 
 
-## Demo #2: Retrival for complex question answer?
+## Demo #2: Knowledge retrival for complex question answer
 
 This demo shows the fundamental approaches in the `know cli` are able to approach complex research questions in a way that is superior to know retrival methods (keyword search, semantic search, and graph RAG)
 
