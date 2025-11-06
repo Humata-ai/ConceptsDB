@@ -4,7 +4,8 @@ The ambition of this project is to create a knowledge API capable of responding 
 
 Think of it as a fusion between LLMs, which can answer complex human questions, and Git, which can model representational version changes.
 
-## Solving the Retrieval Accuracy Problem in Document-Based RAG Pipelines
+## Real World Examples
+### Solving the Retrieval Accuracy Problem in Document-Based RAG Pipelines
 
 A primary application of Know is to address the retrieval accuracy problem in document-based RAG (Retrieval-Augmented Generation) pipelines.
 
@@ -21,4 +22,5 @@ For example:
 - Can it return a summary of a book?
 - Can it produce a synthesis of how a new piece of legislation impacts a business agreement?
 
-Problems such as these are the inspiration for this project
+### A research tool
+Since the nature of Know is interoperable and explainable it's a great fit for researchers and decision makers because built into the fabric of the technology is explainability and interpretability. Questions like "What sources make this answer true?" are easily surfaceable and findable. Additionally, exploration and searchability become simple because nearby concepts are immediately viewable.
