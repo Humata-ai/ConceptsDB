@@ -29,3 +29,5 @@ Unlike embedding models—which produce opaque high-dimensional vectors—Know's
 **Codebase Mapping** — Improve AI coding agents by accurately mapping code concepts, enabling better search, understanding, and targeted changes in large codebases.
 
 **News & Policy Mapping** — Track how legislation or court hearings impact your business by mapping conceptual relationships over time.
+
+**Personalized Learning Maps** — Map an individual's conceptual understanding to create personalized learning paths. By visualizing knowledge gaps and connections in a learner's mental model, Know enables adaptive education tailored to each person's unique cognitive structure.
