@@ -1,4 +1,4 @@
-# Know
+
 
 A knowledge API for complex queries with traceability and human interpretability. Think of it as a fusion between LLMs (which answer complex questions) and Git (which models representational change).
 
