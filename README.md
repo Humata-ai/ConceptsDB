@@ -21,7 +21,17 @@ Build a conceptual map in digital geometric space that humans and AI share. When
 <details>
 <summary>Why use Know instead of a Knowledge Graph?</summary>
 
-[Content to be added]
+Knowledge graphs work well for explicit relationships, but have limitations:
+
+**They can't model continuous space** — Everything must be a discrete node. Hard to represent things like color gradients or spatial dimensions.
+
+**Similarity is distance** — Conceptual spaces naturally show "how similar" through geometric proximity. Knowledge graphs need artificial relationship types instead.
+
+**Concepts combine smoothly** — Knowledge graphs struggle with "pet fish" - when you combine concepts, the meaning emerges naturally through geometric blending in conceptual spaces.
+
+**Grounded in perception** — Instead of symbols pointing to other symbols, concepts connect to actual perceptual dimensions.
+
+Know uses geometric space to mirror how humans actually think about concepts.
 
 </details>
 
