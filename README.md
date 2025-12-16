@@ -1,8 +1,8 @@
-Know is a new approach to storing and searching all human knowledge in a way that is both computer searchable and human readable.
+Know is a new approach to representationally modeling knowledge. Know uses geometric space, referred to as conceptual space, to represent ideas, associates, and information in a way that is both mathematically utilizable and humanly readable.
 
-## Approach
+## Example
 
-Build a conceptual map in digital geometric space that humans and AI share. When humans can inspect the conceptual structure, AI results become debuggable, citable, and trustworthy.
+<insert-example-here>
 
 ## Applications
 
