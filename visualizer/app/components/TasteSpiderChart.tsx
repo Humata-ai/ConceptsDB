@@ -196,7 +196,6 @@ export default function TasteSpiderChart(props: TasteSpiderChartProps) {
           minDistance={2}
           maxDistance={8}
         />
-        <axesHelper args={[2]} />
         <SpiderChartMesh {...props} />
       </Canvas>
     </div>

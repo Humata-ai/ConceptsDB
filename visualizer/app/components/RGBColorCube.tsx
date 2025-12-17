@@ -91,9 +91,6 @@ export default function RGBColorCube() {
 
         {/* The RGB color cube */}
         <ColorCubeMesh />
-
-        {/* Optional: Add axis helpers to show orientation */}
-        <axesHelper args={[2]} />
       </Canvas>
     </div>
   );
