@@ -1,6 +1,9 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { Textarea, IconButton, Dropdown, Menu, MenuButton, MenuItem, Sheet } from '@mui/joy';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import EditIcon from '@mui/icons-material/Edit';
 import styles from './editable-sentence.module.css';
 
 interface EditableSentenceProps {
@@ -51,35 +54,20 @@ export default function EditableSentence({
   const [text, setText] = useState(defaultText);
   const [words, setWords] = useState<ParsedWord[]>([]);
   const [isEditing, setIsEditing] = useState(false);
-  const contentEditableRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Parse words on mount and when text changes from outside
+  // Parse words on mount
   useEffect(() => {
     setWords(parseTextIntoWords(text));
   }, []);
 
   const enterEditMode = () => {
     setIsEditing(true);
-    // Focus and select all text after render
-    setTimeout(() => {
-      if (contentEditableRef.current) {
-        contentEditableRef.current.focus();
-        const range = document.createRange();
-        range.selectNodeContents(contentEditableRef.current);
-        const selection = window.getSelection();
-        selection?.removeAllRanges();
-        selection?.addRange(range);
-      }
-    }, 0);
   };
 
   const exitEditMode = () => {
-    if (contentEditableRef.current) {
-      const newText = contentEditableRef.current.innerText;
-      setText(newText);
-      setWords(parseTextIntoWords(newText));
-      setIsEditing(false);
-    }
+    setWords(parseTextIntoWords(text));
+    setIsEditing(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -102,36 +90,105 @@ export default function EditableSentence({
   // Show placeholder if no words
   if (!isEditing && words.length === 0) {
     return (
-      <div className={`${styles.sentenceContainer} ${className}`}>
+      <Sheet
+        className={className}
+        variant="outlined"
+        sx={{
+          position: 'fixed',
+          bottom: 40,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 100,
+
+          padding: '16px 24px',
+          borderRadius: '12px',
+
+          maxWidth: '80vw',
+          minWidth: '400px',
+          maxHeight: '200px',
+          overflowY: 'auto',
+
+          fontSize: '18px',
+          lineHeight: 1.6,
+        }}
+      >
         <div className={styles.placeholder} onClick={enterEditMode}>
           Click to enter a sentence...
         </div>
-      </div>
+      </Sheet>
     );
   }
 
   return (
-    <div className={`${styles.sentenceContainer} ${className}`}>
+    <Sheet
+      className={className}
+      variant="outlined"
+      sx={{
+        position: 'fixed',
+        bottom: 40,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 100,
+
+        padding: '16px 24px',
+        borderRadius: '12px',
+
+        maxWidth: '80vw',
+        minWidth: '400px',
+        maxHeight: '200px',
+        overflowY: 'auto',
+
+        fontSize: '18px',
+        lineHeight: 1.6,
+      }}
+    >
       {isEditing ? (
-        <div
-          ref={contentEditableRef}
-          contentEditable
-          suppressContentEditableWarning
+        <Textarea
+          slotProps={{
+            textarea: {
+              ref: textareaRef,
+            },
+          }}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
-          className={styles.editableContent}
-        >
-          {text}
-        </div>
+          minRows={3}
+          maxRows={8}
+          autoFocus
+          sx={{
+            fontSize: '18px',
+            lineHeight: 1.6,
+            borderRadius: '8px',
+          }}
+        />
       ) : (
         <>
-          <button
-            className={styles.editButton}
-            onClick={enterEditMode}
-            aria-label="Edit sentence"
-          >
-            ✎
-          </button>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px' }}>
+            <Dropdown>
+              <MenuButton
+                slots={{ root: IconButton }}
+                slotProps={{
+                  root: {
+                    size: 'sm',
+                    variant: 'plain',
+                    color: 'neutral',
+                  },
+                }}
+              >
+                <MoreVertIcon />
+              </MenuButton>
+              {/* @ts-expect-error Joy UI Menu has complex type definitions in beta */}
+              <Menu placement="top-end">
+                {/* @ts-expect-error Joy UI MenuItem has complex type definitions in beta */}
+                <MenuItem onClick={enterEditMode}>
+                  <EditIcon sx={{ mr: 1 }} />
+                  Edit
+                </MenuItem>
+              </Menu>
+            </Dropdown>
+          </div>
+
           <div className={styles.wordsContainer}>
             {words.map((word) => {
               if (!word.isWord) {
@@ -155,6 +212,6 @@ export default function EditableSentence({
           </div>
         </>
       )}
-    </div>
+    </Sheet>
   );
 }

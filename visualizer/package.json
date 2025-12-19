@@ -9,6 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/joy": "5.0.0-beta.52",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.4.2",
     "next": "16.0.7",
@@ -17,6 +20,7 @@
     "three": "^0.182.0"
   },
   "devDependencies": {
+    "@mui/icons-material": "^7.3.6",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
