@@ -13,9 +13,8 @@ export interface DictionaryItem {
     umami: number;
   };
   color: {
-    colorRegion?: {
-      min: { r: number; g: number; b: number };
-      max: { r: number; g: number; b: number };
-    };
+    colorRegions: Array<{
+      meshPath: string;
+    }>;
   };
 }

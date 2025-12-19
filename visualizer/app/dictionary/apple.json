@@ -13,17 +13,13 @@
     "umami": 0.06
   },
   "color": {
-    "colorRegion": {
-      "min": {
-        "r": 0.6,
-        "g": 0.0,
-        "b": 0.0
+    "colorRegions": [
+      {
+        "meshPath": "/models/color-regions/apple-red.obj"
       },
-      "max": {
-        "r": 1.0,
-        "g": 0.4,
-        "b": 0.3
+      {
+        "meshPath": "/models/color-regions/apple-green.obj"
       }
-    }
+    ]
   }
 }
