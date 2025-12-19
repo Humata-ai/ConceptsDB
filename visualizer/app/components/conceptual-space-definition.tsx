@@ -112,12 +112,22 @@ export default function ConceptualSpaceDefinition({
 
       try {
         // Dynamic import of dictionary file
-        const module = await import(`../dictionary/${word}.json`);
+        let module;
+        try {
+          module = await import(`../dictionary/${word}.json`);
+        } catch (importErr: any) {
+          // Word not defined yet - this is okay
+          setLoading(false);
+          return;
+        }
+
         const data = module.default as DictionaryItem;
 
         // Validate dictionary structure
         if (!data.shape || !data.taste || !data.color) {
-          throw new Error(`Invalid dictionary format for "${word}"`);
+          console.warn(`Invalid dictionary format for "${word}"`);
+          setLoading(false);
+          return;
         }
 
         setDictionaryData(data);
@@ -145,15 +155,7 @@ export default function ConceptualSpaceDefinition({
         setLoading(false);
       } catch (err: any) {
         console.error(`Error loading ${word}:`, err);
-
-        if (err.code === 'MODULE_NOT_FOUND' || err.message?.includes('Cannot find module')) {
-          setError(`Word "${word}" not found in dictionary`);
-        } else if (err.message?.includes('Invalid dictionary format')) {
-          setError(err.message);
-        } else {
-          setError(`Failed to load "${word}": ${err.message || 'Unknown error'}`);
-        }
-
+        setError(err.message || `Failed to load "${word}"`);
         setLoading(false);
       }
     }
