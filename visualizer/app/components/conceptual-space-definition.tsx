@@ -15,6 +15,7 @@ import { DictionaryItem } from '../types/dictionary';
 
 // Layout configuration
 const CENTER_POS: [number, number, number] = [0, 0, 5]; // Front and center at eye level
+const APPLE_SPHERE_RADIUS = 2.5; // Padding around apple for connection points
 const RADIUS = 15;
 const BACKGROUND_Z = -20; // Push graphs into background
 const ANGLE_OFFSET = -Math.PI / 2; // Start from top
@@ -44,11 +45,37 @@ const POSITIONS = {
   ] as [number, number, number],
 };
 
+// Calculate connection start points on sphere around apple
+// Each point is on a sphere of radius APPLE_SPHERE_RADIUS, facing toward its graph
+const getConnectionPoint = (graphPos: [number, number, number]): [number, number, number] => {
+  // Calculate direction from apple center to graph
+  const dir = [
+    graphPos[0] - CENTER_POS[0],
+    graphPos[1] - CENTER_POS[1],
+    graphPos[2] - CENTER_POS[2],
+  ];
+  // Normalize direction
+  const length = Math.sqrt(dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2]);
+  const normalized = [dir[0] / length, dir[1] / length, dir[2] / length];
+  // Point on sphere surface
+  return [
+    CENTER_POS[0] + normalized[0] * APPLE_SPHERE_RADIUS,
+    CENTER_POS[1] + normalized[1] * APPLE_SPHERE_RADIUS,
+    CENTER_POS[2] + normalized[2] * APPLE_SPHERE_RADIUS,
+  ] as [number, number, number];
+};
+
+const CONNECTION_STARTS = {
+  taste: getConnectionPoint(POSITIONS.taste),
+  color: getConnectionPoint(POSITIONS.color),
+  shape: getConnectionPoint(POSITIONS.shape),
+};
+
 // Styling constants
 const COLORS = {
   centerText: '#333333',
-  connectionLine: '#666666',
-  boundingBox: '#444444',
+  connectionLine: '#444444',
+  boundingBox: '#d0d0d0',
   spaceTitle: '#222222',
   mainTitle: '#000000',
 };
@@ -235,31 +262,33 @@ export default function ConceptualSpaceDefinition({
 
         {/* Connecting Lines to background graphs */}
         <ConnectionLine
-          start={CENTER_POS}
+          start={CONNECTION_STARTS.taste}
           end={POSITIONS.taste}
           color={COLORS.connectionLine}
+          opacity={0.5}
         />
         <ConnectionLine
-          start={CENTER_POS}
+          start={CONNECTION_STARTS.color}
           end={POSITIONS.color}
           color={COLORS.connectionLine}
+          opacity={0.5}
         />
         <ConnectionLine
-          start={CENTER_POS}
+          start={CONNECTION_STARTS.shape}
           end={POSITIONS.shape}
           color={COLORS.connectionLine}
+          opacity={0.5}
         />
 
         {/* Taste Space - Below (rotated upright) */}
         <group position={POSITIONS.taste} rotation={[Math.PI / 2, 0, 0]}>
           <TasteSpace tasteValues={dictionaryData.taste} radius={3} />
-          <BoundingBox size={[7.5, 0.2, 7.5]} position={[0, 0, 0]} color={COLORS.boundingBox} />
+          <BoundingBox size={[7.5, 0.2, 7.5]} position={[0, 0, 0]} color={COLORS.boundingBox} opacity={0.5} />
           <Text
             position={[0, 0, -4]}
             rotation={[-Math.PI / 2, 0, 0]}
             fontSize={FONT_SIZES.spaceTitle}
             color={COLORS.spaceTitle}
-            fontWeight="bold"
             anchorX="center"
             anchorY="bottom"
           >
@@ -270,12 +299,11 @@ export default function ConceptualSpaceDefinition({
         {/* Color Space - Bottom Left */}
         <group position={POSITIONS.color} scale={5}>
           <ColorSpace highlightColor={dictionaryData.color} />
-          <BoundingBox size={[1, 1, 1]} position={[0.5, 0.5, 0.5]} color={COLORS.boundingBox} />
+          <BoundingBox size={[1, 1, 1]} position={[0.5, 0.5, 0.5]} color={COLORS.boundingBox} opacity={0.5} />
           <Text
             position={[0.5, 1.2, 0.5]}
             fontSize={FONT_SIZES.spaceTitle / 5}
             color={COLORS.spaceTitle}
-            fontWeight="bold"
             anchorX="center"
             anchorY="bottom"
           >
@@ -286,12 +314,11 @@ export default function ConceptualSpaceDefinition({
         {/* Shape Space - Bottom Right */}
         <group position={POSITIONS.shape} scale={0.5}>
           <ShapeSpace meshData={meshData} unit={dictionaryData.shape.unit} />
-          <BoundingBox size={[10, 10, 10]} position={[5, 5, 5]} color={COLORS.boundingBox} />
+          <BoundingBox size={[10, 10, 10]} position={[5, 5, 5]} color={COLORS.boundingBox} opacity={0.5} />
           <Text
             position={[5, 11, 5]}
             fontSize={FONT_SIZES.spaceTitle * 2}
             color={COLORS.spaceTitle}
-            fontWeight="bold"
             anchorX="center"
             anchorY="bottom"
           >
