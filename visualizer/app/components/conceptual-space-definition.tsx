@@ -14,11 +14,12 @@ import { MeshData } from '../utils/appleShape';
 import { DictionaryItem } from '../types/dictionary';
 
 // Layout configuration
-const CENTER_POS: [number, number, number] = [0, 3, 0];
+const CENTER_POS: [number, number, number] = [0, 0, 5]; // Front and center at eye level
 const RADIUS = 15;
+const BACKGROUND_Z = -20; // Push graphs into background
 const ANGLE_OFFSET = -Math.PI / 2; // Start from top
 
-// Calculate circular positions (120° apart)
+// Calculate circular positions (120° apart) - in background
 const tasteAngle = 0 + ANGLE_OFFSET;
 const colorAngle = (2 * Math.PI / 3) + ANGLE_OFFSET;
 const shapeAngle = (4 * Math.PI / 3) + ANGLE_OFFSET;
@@ -27,19 +28,19 @@ const POSITIONS = {
   taste: [
     Math.cos(tasteAngle) * RADIUS,
     3,
-    Math.sin(tasteAngle) * RADIUS
+    Math.sin(tasteAngle) * RADIUS + BACKGROUND_Z
   ] as [number, number, number],
 
   color: [
     Math.cos(colorAngle) * RADIUS,
     3,
-    Math.sin(colorAngle) * RADIUS
+    Math.sin(colorAngle) * RADIUS + BACKGROUND_Z
   ] as [number, number, number],
 
   shape: [
     Math.cos(shapeAngle) * RADIUS,
     3,
-    Math.sin(shapeAngle) * RADIUS
+    Math.sin(shapeAngle) * RADIUS + BACKGROUND_Z
   ] as [number, number, number],
 };
 
@@ -53,8 +54,7 @@ const COLORS = {
 };
 
 const FONT_SIZES = {
-  mainTitle: 1.2,
-  centerNode: 1.0,
+  centerNode: 2.5, // Large and prominent at center
   spaceTitle: 0.8,
 };
 
@@ -185,11 +185,29 @@ export default function ConceptualSpaceDefinition({
   }
 
   return (
-    <div className={className} style={{ width, height }}>
+    <div className={className} style={{ width, height, position: 'relative' }}>
+      {/* HTML Title Overlay */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '10px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 10,
+          fontSize: '0.9rem',
+          color: '#666',
+          fontWeight: 500,
+          textAlign: 'center',
+          pointerEvents: 'none',
+        }}
+      >
+        Conceptual Space Definition of {dictionaryData.name}
+      </div>
+
       <Canvas
         camera={{
-          position: [0, 18, 30],
-          fov: 60,
+          position: [0, 0, 25],
+          fov: 50,
         }}
         gl={{ antialias: true }}
       >
@@ -199,27 +217,14 @@ export default function ConceptualSpaceDefinition({
 
         <OrbitControls
           makeDefault
-          target={[0, 5, 0]}
+          target={[0, 0, 0]}
           enableDamping={true}
           dampingFactor={0.05}
-          minDistance={15}
-          maxDistance={70}
+          minDistance={10}
+          maxDistance={60}
         />
 
-        {/* Main Scene Title */}
-        <Text
-          position={[0, 12, 0]}
-          fontSize={FONT_SIZES.mainTitle}
-          color={COLORS.mainTitle}
-          fontWeight="bold"
-          anchorX="center"
-          anchorY="bottom"
-          maxWidth={40}
-        >
-          Conceptual Space Definition of {dictionaryData.name}
-        </Text>
-
-        {/* Center Node */}
+        {/* Center Node - Front and center */}
         <Text
           position={CENTER_POS}
           fontSize={FONT_SIZES.centerNode}
@@ -231,20 +236,20 @@ export default function ConceptualSpaceDefinition({
           {dictionaryData.name}
         </Text>
 
-        {/* Connecting Lines */}
+        {/* Connecting Lines to background graphs */}
         <ConnectionLine
           start={CENTER_POS}
-          end={[0, 3, 11.4]}
+          end={POSITIONS.taste}
           color={COLORS.connectionLine}
         />
         <ConnectionLine
           start={CENTER_POS}
-          end={[-7.99, 5.5, -2.5]}
+          end={POSITIONS.color}
           color={COLORS.connectionLine}
         />
         <ConnectionLine
           start={CENTER_POS}
-          end={[12.99, 5.5, -2.5]}
+          end={POSITIONS.shape}
           color={COLORS.connectionLine}
         />
 
