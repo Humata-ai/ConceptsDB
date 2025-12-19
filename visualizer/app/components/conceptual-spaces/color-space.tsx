@@ -202,6 +202,9 @@ export default function ColorSpace({
     texture3D.type = THREE.UnsignedByteType;
     texture3D.minFilter = THREE.LinearFilter;
     texture3D.magFilter = THREE.LinearFilter;
+    texture3D.wrapS = THREE.ClampToEdgeWrapping;
+    texture3D.wrapT = THREE.ClampToEdgeWrapping;
+    texture3D.wrapR = THREE.ClampToEdgeWrapping;
     texture3D.needsUpdate = true;
 
     return texture3D;
@@ -237,31 +240,27 @@ export default function ColorSpace({
 
   // Create materials for each region mesh
   const regionMaterials = useMemo(() => {
-    return regionMeshes.map((region) => {
+    return regionMeshes.map(() => {
       return new THREE.ShaderMaterial({
         uniforms: {
           colorTexture: { value: texture },
-          regionMin: { value: new THREE.Vector3(region.bbox.min.x, region.bbox.min.y, region.bbox.min.z) },
-          regionMax: { value: new THREE.Vector3(region.bbox.max.x, region.bbox.max.y, region.bbox.max.z) },
         },
         vertexShader: `
           varying vec3 vPosition;
 
           void main() {
-            vPosition = position + 0.5;
+            // Vertex positions are already in 0-1 RGB space
+            vPosition = position;
             gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
           }
         `,
         fragmentShader: `
           uniform highp sampler3D colorTexture;
-          uniform vec3 regionMin;
-          uniform vec3 regionMax;
           varying vec3 vPosition;
 
           void main() {
-            // Map position to region coordinates
-            vec3 regionCoord = regionMin + vPosition * (regionMax - regionMin);
-            gl_FragColor = texture(colorTexture, regionCoord);
+            // Sample texture directly at vertex position (already in 0-1 space)
+            gl_FragColor = texture(colorTexture, vPosition);
           }
         `,
         side: THREE.DoubleSide,
@@ -289,26 +288,13 @@ export default function ColorSpace({
       </mesh>
 
       {/* Region meshes (opaque, show gradient) */}
-      {regionMeshes.map((region, idx) => {
-        // Calculate position and scale from bounding box
-        const centerX = (region.bbox.min.x + region.bbox.max.x) / 2;
-        const centerY = (region.bbox.min.y + region.bbox.max.y) / 2;
-        const centerZ = (region.bbox.min.z + region.bbox.max.z) / 2;
-
-        const width = region.bbox.max.x - region.bbox.min.x;
-        const height = region.bbox.max.y - region.bbox.min.y;
-        const depth = region.bbox.max.z - region.bbox.min.z;
-
-        return (
-          <mesh
-            key={idx}
-            position={[centerX, centerY, centerZ]}
-            scale={[width, height, depth]}
-            material={regionMaterials[idx]}
-            geometry={region.geometry}
-          />
-        );
-      })}
+      {regionMeshes.map((region, idx) => (
+        <mesh
+          key={idx}
+          material={regionMaterials[idx]}
+          geometry={region.geometry}
+        />
+      ))}
     </group>
   );
 }
