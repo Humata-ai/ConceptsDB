@@ -28,7 +28,7 @@ export function SentenceEditor({ text, onTextChange, onExit }: SentenceEditorPro
       onChange={(e) => onTextChange(e.target.value)}
       onKeyDown={handleKeyDown}
       onBlur={onExit}
-      minRows={3}
+      minRows={1}
       maxRows={8}
       autoFocus
       sx={{

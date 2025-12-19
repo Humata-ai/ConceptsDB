@@ -1,6 +1,7 @@
 import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { useMemo, useState, useEffect } from 'react';
+import { isIOS, isSafari } from 'react-device-detect';
 import { MeshData, createLineGeometry } from '../../utils/appleShape';
 
 interface ShapeSpaceProps {
@@ -18,9 +19,6 @@ export default function ShapeSpace({
   const [isIOSSafari, setIsIOSSafari] = useState(false);
 
   useEffect(() => {
-    const userAgent = navigator.userAgent;
-    const isIOS = /iPad|iPhone|iPod/.test(userAgent);
-    const isSafari = /Safari/.test(userAgent) && !/Chrome|CriOS|FxiOS/.test(userAgent);
     setIsIOSSafari(isIOS && isSafari);
   }, []);
 
