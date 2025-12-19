@@ -1,15 +1,18 @@
-import TasteSpiderChart from './components/TasteSpiderChart';
+import ShapeGraph from './components/ShapeGraph';
+import { generateAppleShape } from './utils/appleShape';
 
 export default function Home() {
+  const appleMesh = generateAppleShape(7.5);
+
   return (
-    <TasteSpiderChart
-      tasteValues={{
-        sweet: 0.8,
-        sour: 0.3,
-        salty: 0.6,
-        bitter: 0.2,
-        umami: 0.7,
-      }}
+    <ShapeGraph
+      meshData={appleMesh}
+      unit="cm"
+      showAxes={true}
+      showGrid={true}
+      showLabels={true}
+      meshColor="#ff6b6b"
+      meshOpacity={0.9}
     />
   );
 }

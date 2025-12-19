@@ -48,7 +48,7 @@ Neural networks excel at perception and pattern recognition but have limitations
 - **Logic** — Neural nets approximate reasoning but don't guarantee correctness
 - **Reliability** — High-stakes domains (law, medicine, finance) require deterministic reasoning
 - **Data efficiency** — Rules generalize without massive datasets
-- **Truth maintenance** — Symbolic systems avoid hallucinations through validated knowledge
+- **Truth maintenance** — Know avoids hallucinations through validated auditable knowledge
 
 Know excels at being citeable, understandable, easily editable.
 
