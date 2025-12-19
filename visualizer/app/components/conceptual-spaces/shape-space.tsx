@@ -1,6 +1,6 @@
 import { Text } from '@react-three/drei';
 import * as THREE from 'three';
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { MeshData, createLineGeometry } from '../../utils/appleShape';
 
 interface ShapeSpaceProps {
@@ -14,10 +14,29 @@ export default function ShapeSpace({
   position = [0, 0, 0],
   unit = 'cm',
 }: ShapeSpaceProps) {
+  // Detect iOS Safari for material compatibility
+  const [isIOSSafari, setIsIOSSafari] = useState(false);
+
+  useEffect(() => {
+    const userAgent = navigator.userAgent;
+    const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+    const isSafari = /Safari/.test(userAgent) && !/Chrome|CriOS|FxiOS/.test(userAgent);
+    setIsIOSSafari(isIOS && isSafari);
+  }, []);
+
   const meshGeometry = useMemo(() => {
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(meshData.vertices, 3));
-    geometry.setIndex(new THREE.BufferAttribute(meshData.indices, 1));
+
+    // iOS Safari compatibility: Ensure indices are in the correct format
+    if (meshData.indices) {
+      // Convert to Uint32Array for better iOS compatibility
+      const indices = meshData.indices instanceof Uint32Array
+        ? meshData.indices
+        : new Uint32Array(meshData.indices);
+      geometry.setIndex(new THREE.BufferAttribute(indices, 1));
+    }
+
     if (meshData.normals) {
       geometry.setAttribute('normal', new THREE.BufferAttribute(meshData.normals, 3));
     } else {
@@ -90,7 +109,24 @@ export default function ShapeSpace({
 
       {/* Mesh */}
       <mesh geometry={meshGeometry} position={[xMax / 2, yMax / 2, zMax / 2]}>
-        <meshStandardMaterial color="#ffffff" side={THREE.DoubleSide} />
+        {/*
+          iOS Safari WebGL Compatibility:
+          iOS Safari has long-standing issues with lighting-based materials (meshStandardMaterial, meshLambertMaterial)
+          due to Metal backend shader compilation differences. These materials often render as black or fail to render.
+
+          Known issues:
+          - https://github.com/mrdoob/three.js/issues/17113 (MeshStandardMaterial renders black on iOS)
+          - https://github.com/mrdoob/three.js/issues/17918 (MeshStandardMaterial iOS rendering issues)
+          - https://github.com/mrdoob/three.js/issues/25741 (WebGL issues after iOS 16.4)
+          - https://discourse.threejs.org/t/ios-18-2-causing-webgl-error/75143 (iOS 18.2 WebGL errors)
+
+          Solution: Use meshBasicMaterial for iOS Safari, meshStandardMaterial for other browsers
+        */}
+        {isIOSSafari ? (
+          <meshBasicMaterial color="#cccccc" side={THREE.DoubleSide} />
+        ) : (
+          <meshStandardMaterial color="#ffffff" side={THREE.DoubleSide} />
+        )}
       </mesh>
     </group>
   );
