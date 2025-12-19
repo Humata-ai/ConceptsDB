@@ -231,18 +231,22 @@ export default function ConceptualSpaceDefinition({
       <div
         style={{
           position: 'absolute',
-          top: '10px',
+          top: 'max(40px, calc(env(safe-area-inset-top) + 40px))',
           left: '50%',
           transform: 'translateX(-50%)',
-          zIndex: 10,
-          fontSize: '0.9rem',
-          color: '#666',
-          fontWeight: 500,
+          zIndex: 1000,
+          fontSize: '1rem',
+          color: '#333',
+          fontWeight: 'normal',
           textAlign: 'center',
           pointerEvents: 'none',
+          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          padding: '8px 16px',
+          borderRadius: '4px',
+          whiteSpace: 'nowrap',
         }}
       >
-        Conceptual Space Definition of {dictionaryData.name}
+        Conceptual space definition of {dictionaryData.name}
       </div>
 
       <Canvas
