@@ -206,7 +206,7 @@ export default function ConceptualSpaceDefinition({
 
       <Canvas
         camera={{
-          position: [0, 0, 35],
+          position: [0, 0, 60],
           fov: 50,
         }}
         gl={{ antialias: true }}
