@@ -27,19 +27,19 @@ const shapeAngle = (4 * Math.PI / 3) + ANGLE_OFFSET;
 const POSITIONS = {
   taste: [
     Math.cos(tasteAngle) * RADIUS,
-    3,
+    -5, // Below the center text
     Math.sin(tasteAngle) * RADIUS + BACKGROUND_Z
   ] as [number, number, number],
 
   color: [
     Math.cos(colorAngle) * RADIUS,
-    3,
+    3, // Upper left
     Math.sin(colorAngle) * RADIUS + BACKGROUND_Z
   ] as [number, number, number],
 
   shape: [
     Math.cos(shapeAngle) * RADIUS,
-    3,
+    3, // Upper right
     Math.sin(shapeAngle) * RADIUS + BACKGROUND_Z
   ] as [number, number, number],
 };
@@ -217,11 +217,8 @@ export default function ConceptualSpaceDefinition({
 
         <OrbitControls
           makeDefault
-          target={[0, 0, 0]}
           enableDamping={true}
           dampingFactor={0.05}
-          minDistance={10}
-          maxDistance={60}
         />
 
         {/* Center Node - Front and center */}
@@ -253,12 +250,13 @@ export default function ConceptualSpaceDefinition({
           color={COLORS.connectionLine}
         />
 
-        {/* Taste Space - Top */}
-        <group position={POSITIONS.taste}>
+        {/* Taste Space - Below (rotated upright) */}
+        <group position={POSITIONS.taste} rotation={[Math.PI / 2, 0, 0]}>
           <TasteSpace tasteValues={dictionaryData.taste} radius={3} />
-          <BoundingBox size={[7.2, 0.2, 7.2]} color={COLORS.boundingBox} />
+          <BoundingBox size={[7.5, 0.2, 7.5]} position={[0, 0, 0]} color={COLORS.boundingBox} />
           <Text
-            position={[0, 1, 0]}
+            position={[0, 0, -4]}
+            rotation={[-Math.PI / 2, 0, 0]}
             fontSize={FONT_SIZES.spaceTitle}
             color={COLORS.spaceTitle}
             fontWeight="bold"
