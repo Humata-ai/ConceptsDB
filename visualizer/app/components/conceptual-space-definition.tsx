@@ -181,27 +181,39 @@ export default function ConceptualSpaceDefinition({
     );
   }
 
-  // Error state
+  // Error state - show message in 3D scene
   if (error) {
     return (
-      <div
-        className={className}
-        style={{
-          width,
-          height,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column',
-          fontSize: '1.5rem',
-          color: '#ff0000',
-          gap: '1rem',
-        }}
-      >
-        <div>{error}</div>
-        <div style={{ fontSize: '1rem', color: '#666' }}>
-          Make sure {word}.json exists in the dictionary folder
-        </div>
+      <div className={className} style={{ width, height, position: 'relative' }}>
+        <Canvas
+          camera={{
+            position: [0, 0, 42],
+            fov: 50,
+          }}
+          gl={{ antialias: true }}
+        >
+          <color attach="background" args={['white']} />
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[10, 10, 10]} intensity={0.8} />
+
+          <OrbitControls
+            makeDefault
+            enableDamping={true}
+            dampingFactor={0.05}
+          />
+
+          <Text
+            position={[0, 0, 5]}
+            fontSize={2}
+            color="#666666"
+            anchorX="center"
+            anchorY="middle"
+            textAlign="center"
+            maxWidth={40}
+          >
+            {`No definition for "${word}"`}
+          </Text>
+        </Canvas>
       </div>
     );
   }
