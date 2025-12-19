@@ -3,6 +3,7 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Text } from '@react-three/drei';
 import { useEffect, useState } from 'react';
+import { CircularProgress } from '@mui/joy';
 import * as THREE from 'three';
 import ShapeSpace from './conceptual-spaces/shape-space';
 import TasteSpace from './conceptual-spaces/taste-space';
@@ -174,11 +175,9 @@ export default function ConceptualSpaceDefinition({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '1.5rem',
-          color: '#666',
         }}
       >
-        Loading {word} definition...
+        <CircularProgress color="neutral" />
       </div>
     );
   }
