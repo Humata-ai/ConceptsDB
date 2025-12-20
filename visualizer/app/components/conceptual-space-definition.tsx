@@ -1,8 +1,8 @@
 'use client';
 
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, Text } from '@react-three/drei';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { CircularProgress } from '@mui/joy';
 import * as THREE from 'three';
 import ShapeSpace from './conceptual-spaces/shape-space';
@@ -13,6 +13,23 @@ import ConnectionLine from './conceptual-spaces/connection-line';
 import { loadOBJ, scaleMeshData, calculateBoundingBox } from '../utils/objParser';
 import { MeshData } from '../utils/appleShape';
 import { DictionaryItem } from '../types/dictionary';
+
+// Custom controls component with zoom to cursor
+function DynamicOrbitControls() {
+  return (
+    <OrbitControls
+      makeDefault
+      enableDamping={true}
+      dampingFactor={0.05}
+      enablePan={true}
+      zoomToCursor={true}
+      zoomSpeed={1.2}
+      rotateSpeed={0.8}
+      panSpeed={1}
+      screenSpacePanning={true}
+    />
+  );
+}
 
 // Layout configuration
 const CENTER_POS: [number, number, number] = [0, 0, 5]; // Front and center at eye level
@@ -261,11 +278,7 @@ export default function ConceptualSpaceDefinition({
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 10]} intensity={0.8} />
 
-        <OrbitControls
-          makeDefault
-          enableDamping={true}
-          dampingFactor={0.05}
-        />
+        <DynamicOrbitControls />
 
         {/* Center Node - Front and center */}
         <Text
