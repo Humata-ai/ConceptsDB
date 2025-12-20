@@ -19,6 +19,9 @@
       },
       {
         "meshPath": "/models/color-regions/apple-green.obj"
+      },
+      {
+        "meshPath": "/models/color-regions/apple-yellow.obj"
       }
     ]
   }

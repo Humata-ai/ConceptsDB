@@ -1,15 +1,15 @@
-# Red apple color region - Simple polygon (LARGER)
-# Expanded to cover more of the red color space
+# Red apple color region - Realistic red apple colors
+# Deep red to bright red with some orange tones
 
-# 8 vertices forming a larger polyhedron
-v 0.80 0.20 0.10
-v 1.0 0.25 0.15
-v 0.95 0.40 0.18
-v 0.65 0.38 0.14
-v 0.55 0.22 0.08
-v 0.70 0.05 0.05
-v 0.80 0.28 0.20
-v 0.75 0.25 0.02
+# 8 vertices - Red HIGH (0.6-1.0), Green LOW (0.0-0.25), Blue VERY LOW (0.0-0.1)
+v 0.75 0.15 0.05
+v 1.0 0.18 0.08
+v 0.95 0.25 0.10
+v 0.65 0.22 0.08
+v 0.60 0.12 0.03
+v 0.70 0.05 0.02
+v 0.80 0.20 0.12
+v 0.75 0.10 0.01
 
 # Faces
 f 1 2 7
