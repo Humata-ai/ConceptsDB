@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
+import type * as THREE from 'three';
 import type { ColorSpaceProps, LoadedMesh } from './types';
 import { loadMeshes } from './mesh-loader';
 import { generateColorSpaceTexture } from './texture-generator';
