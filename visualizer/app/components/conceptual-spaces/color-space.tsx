@@ -74,9 +74,10 @@ export default function ColorSpace({
 }: ColorSpaceProps) {
   const { regionMeshes, isLoading } = useMeshLoader(highlightColor);
 
+  // Texture is independent of region meshes - generate once
   const texture = useMemo(
-    () => generateColorSpaceTexture(regionMeshes),
-    [regionMeshes]
+    () => generateColorSpaceTexture(),
+    []
   );
 
   const cubeMaterial = useMemo(
@@ -97,14 +98,14 @@ export default function ColorSpace({
 
   if (isLoading) {
     return (
-      <group position={position} scale={1/255}>
+      <group position={position} scale={1 / 255}>
         <ColorCube position={cubePosition} material={cubeMaterial} />
       </group>
     );
   }
 
   return (
-    <group position={position} scale={1/255}>
+    <group position={position} scale={1 / 255}>
       <ColorCube position={cubePosition} material={cubeMaterial} />
       <RegionMeshes meshes={regionMeshes} materials={regionMaterials} />
     </group>
