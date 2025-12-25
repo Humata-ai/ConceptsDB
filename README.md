@@ -20,7 +20,7 @@ The current ambition of ConceptsDB is to model modern English semantics and its 
 
 **Personalized AI** — Enable AI agents to learn and remember information about you in a queryable way. For example, a web agent booking travel can remember you prefer aisle seats, avoid early morning flights, and always need vegetarian meals—then automatically apply these preferences without asking each time.
 
-**ConceptsDBDB** — Get structured database benefits without the setup cost. ConceptsDB learns conceptual schemas from natural language, so you can query knowledge like a database without spending weeks designing tables and normalizing data. The structure emerges automatically from understanding our natural languages.
+**Big Data Searching** — Get structured database benefits without the setup cost. ConceptsDB learns conceptual schemas from natural language, so you can query knowledge like a database without spending weeks designing tables and normalizing data. The structure emerges automatically from understanding our natural languages.
 
 ## FAQ
 
