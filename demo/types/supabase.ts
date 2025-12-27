@@ -82,6 +82,42 @@ export type Database = {
           },
         ]
       }
+      concept_space_objects: {
+        Row: {
+          concept_id: string
+          conceptual_space_object_id: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          concept_id: string
+          conceptual_space_object_id: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          concept_id?: string
+          conceptual_space_object_id?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "concept_space_objects_concept_id_fkey"
+            columns: ["concept_id"]
+            isOneToOne: false
+            referencedRelation: "concepts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "concept_space_objects_conceptual_space_object_id_fkey"
+            columns: ["conceptual_space_object_id"]
+            isOneToOne: false
+            referencedRelation: "conceptual_space_objects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       concepts: {
         Row: {
           created_at: string
@@ -97,61 +133,28 @@ export type Database = {
         }
         Relationships: []
       }
-      conceptual_spaces: {
-        Row: {
-          created_at: string
-          id: string
-          name: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          name: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          name?: string
-        }
-        Relationships: []
-      }
-      quality_dimensions: {
+      conceptual_space_objects: {
         Row: {
           conceptual_space_id: string
           created_at: string
-          data_type: string
           id: string
-          max_value: number | null
-          min_value: number | null
-          name: string
-          sort_order: number
-          unit: string | null
+          value: Json
         }
         Insert: {
           conceptual_space_id: string
           created_at?: string
-          data_type?: string
           id?: string
-          max_value?: number | null
-          min_value?: number | null
-          name: string
-          sort_order?: number
-          unit?: string | null
+          value?: Json
         }
         Update: {
           conceptual_space_id?: string
           created_at?: string
-          data_type?: string
           id?: string
-          max_value?: number | null
-          min_value?: number | null
-          name?: string
-          sort_order?: number
-          unit?: string | null
+          value?: Json
         }
         Relationships: [
           {
-            foreignKeyName: "quality_dimensions_conceptual_space_id_fkey"
+            foreignKeyName: "conceptual_space_objects_conceptual_space_id_fkey"
             columns: ["conceptual_space_id"]
             isOneToOne: false
             referencedRelation: "conceptual_spaces"
@@ -159,58 +162,55 @@ export type Database = {
           },
         ]
       }
-      space_point_values: {
+      conceptual_spaces: {
         Row: {
-          dimension_id: string
-          point_id: string
-          value: number
+          created_at: string
+          id: string
+          name: string
+          schema_version: number
+          value_json_schema: Json
         }
         Insert: {
-          dimension_id: string
-          point_id: string
-          value: number
+          created_at?: string
+          id?: string
+          name: string
+          schema_version?: number
+          value_json_schema?: Json
         }
         Update: {
-          dimension_id?: string
-          point_id?: string
-          value?: number
+          created_at?: string
+          id?: string
+          name?: string
+          schema_version?: number
+          value_json_schema?: Json
         }
-        Relationships: [
-          {
-            foreignKeyName: "space_point_values_dimension_id_fkey"
-            columns: ["dimension_id"]
-            isOneToOne: false
-            referencedRelation: "quality_dimensions"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "space_point_values_point_id_fkey"
-            columns: ["point_id"]
-            isOneToOne: false
-            referencedRelation: "space_points"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
-      space_points: {
+      quality_dimensions: {
         Row: {
           conceptual_space_id: string
           created_at: string
           id: string
+          json_schema: Json
+          name: string
         }
         Insert: {
           conceptual_space_id: string
           created_at?: string
           id?: string
+          json_schema?: Json
+          name: string
         }
         Update: {
           conceptual_space_id?: string
           created_at?: string
           id?: string
+          json_schema?: Json
+          name?: string
         }
         Relationships: [
           {
-            foreignKeyName: "space_points_conceptual_space_id_fkey"
+            foreignKeyName: "quality_dimensions_conceptual_space_id_fkey"
             columns: ["conceptual_space_id"]
             isOneToOne: false
             referencedRelation: "conceptual_spaces"
